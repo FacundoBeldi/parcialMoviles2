@@ -10,11 +10,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import android.media.MediaPlayer
 
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: Adapter
     private var pjList = mutableListOf<Results>() //lista mutable para utilizar en el adapter, donde guardo los pjs de la API
+    private lateinit var mediaPlayer: MediaPlayer
 
     val job = Job() //nose que hace
 
@@ -27,6 +29,19 @@ class MainActivity : AppCompatActivity() {
         getCharacters() //funcion que consume la API
         adapter = Adapter(this@MainActivity,pjList) //agrego al adapter la info del personaje para manejarla
         recyclerView.adapter = adapter
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.rickandmorty)
+        mediaPlayer.isLooping = true
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mediaPlayer.start() // Iniciar la música cuando la actividad se inicia
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mediaPlayer.pause() // Pausar la música cuando la actividad se detiene
     }
 
     private fun getCharacters() { //llamo a la API y guardo la informacion en una lista
@@ -65,6 +80,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mediaPlayer.release()
         job.cancel()
     }
 }
