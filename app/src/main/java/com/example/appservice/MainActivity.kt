@@ -14,22 +14,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: Adapter
-    private var pjList = mutableListOf<Results>()
+    private var pjList = mutableListOf<Results>() //lista mutable para utilizar en el adapter, donde guardo los pjs de la API
 
-    val job = Job()
+    val job = Job() //nose que hace
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.recycler_main)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        getCharacters()
-        adapter = Adapter(this@MainActivity,pjList)
+        getCharacters() //funcion que consume la API
+        adapter = Adapter(this@MainActivity,pjList) //agrego al adapter la info del personaje para manejarla
         recyclerView.adapter = adapter
-
     }
 
-    private fun getCharacters() {
+    private fun getCharacters() { //llamo a la API y guardo la informacion en una lista
         CoroutineScope(Dispatchers.IO).launch {
             val call = getRetrofit().create(ApiService::class.java).getListOfSpecies("character/?species=Alien")
             val response = call.body()

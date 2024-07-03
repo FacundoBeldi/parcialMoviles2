@@ -10,9 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 
-class Adapter(val context: Context, val listCharacters: List<Results>): RecyclerView.Adapter<Adapter.AdapViewHolder>() {
+class Adapter(val context: Context, val listPj: List<Results>): RecyclerView.Adapter<Adapter.AdapViewHolder>() { //Contexto del Main Activity para usar Glide
 
     inner class AdapViewHolder(view: View) : RecyclerView.ViewHolder(view) {
          val imageView: ImageView = view.findViewById(R.id.item_image)
@@ -23,15 +22,15 @@ class Adapter(val context: Context, val listCharacters: List<Results>): Recycler
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val selectedCharacter = listCharacters[position]
-                    val intent = Intent(context, DetailActivity::class.java).apply {
+                    val selectedCharacter = listPj[position]
+                    val intent = Intent(context, DetailActivity::class.java).apply { //le mando la info al DetailActivity
                         putExtra("name", selectedCharacter.name)
                         putExtra("img", selectedCharacter.image)
                         putExtra("status", selectedCharacter.status)
                         putExtra("gender", selectedCharacter.gender)
                         putExtra("location", selectedCharacter.location.name)
                     }
-                    context.startActivity(intent)
+                    context.startActivity(intent) //Esto te manda al DetailActivity
                 }
             }
         }
@@ -42,9 +41,8 @@ class Adapter(val context: Context, val listCharacters: List<Results>): Recycler
         return AdapViewHolder(layoutInflater.inflate(R.layout.list_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: AdapViewHolder, position: Int) {
-
-        val item = listCharacters[position]
+    override fun onBindViewHolder(holder: AdapViewHolder, position: Int) { //Itera por cada item que tenga en la lista Mutable
+        val item = listPj[position]
         Log.i("MainActivity",item.toString())
         holder.nameView.text = item.name
         holder.descripcionView.text = item.species
@@ -52,6 +50,6 @@ class Adapter(val context: Context, val listCharacters: List<Results>): Recycler
     }
 
     override fun getItemCount(): Int {
-        return listCharacters.size
+        return listPj.size
     }
 }

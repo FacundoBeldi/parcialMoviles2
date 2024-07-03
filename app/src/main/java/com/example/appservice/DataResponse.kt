@@ -3,7 +3,7 @@ data class DataResponse(
     val results: List<Results>
 )
 
-data class Results(
+data class Results( //la lista en si
     val id : Int,
     val name: String,
     val status: String,
@@ -13,6 +13,6 @@ data class Results(
     val location: Location
 )
 
-data class Location(
+data class Location( //no devuelve string, sino que devuelve objeto, entonces debo hacer una data class
     val name: String
 )

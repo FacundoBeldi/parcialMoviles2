@@ -7,23 +7,23 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 
 class DetailActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) { //Recibo toda la informacion que envie desde el Adapter y la muestro en el detalle de cada lista particular
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val name = intent.getStringExtra("name")
+        val name = intent.getStringExtra("name") //recibo lo que llamo del adapter
         val img = intent.getStringExtra("img")
         val status = intent.getStringExtra("status")
         val gender = intent.getStringExtra("gender")
         val location = intent.getStringExtra("location")
 
-        val nameTextView: TextView = findViewById(R.id.etNombre)
+        val nameTextView: TextView = findViewById(R.id.etNombre)//esto es como un getElementById
         val imgView: ImageView = findViewById(R.id.imgPerson)
         val specieTextView: TextView = findViewById(R.id.etEstado)
         val genderTextView: TextView = findViewById(R.id.etGenero)
         val locationTextView: TextView = findViewById(R.id.etUbicacion)
 
-        nameTextView.text = name
+        nameTextView.text = name //seteo el valor al elemento
         specieTextView.text = status
         genderTextView.text = gender
         locationTextView.text = location
